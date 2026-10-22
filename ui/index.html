@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="WebGL / WebGPU 渲染演示" />
+  <title>WebGL / WebGPU · Rendering</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+  <!-- 渲染目标：WebGL 与 WebGPU 共用同一块画布 -->
+  <canvas id="scene" class="scene" width="1280" height="720"></canvas>
+
+  <!-- 画面暗角，纯装饰 -->
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- 左上角标识 -->
+  <header class="hud hud--top">
+    <h1 class="title">
+      <span class="title__mark" aria-hidden="true"></span>
+      <span class="title__text">WebGL / WebGPU</span>
+    </h1>
+    <p class="subtitle">Functional Examples</p>
+  </header>
+
+  <!-- 右下角运行信息 -->
+  <aside class="hud hud--stats" aria-label="渲染信息">
+    <dl class="stats">
+      <div class="stat">
+        <dt>API</dt>
+        <dd class="stat__value" id="stat-api">—</dd>
+      </div>
+      <div class="stat">
+        <dt>FPS</dt>
+        <dd class="stat__value stat__value--num" id="stat-fps">—</dd>
+      </div>
+      <div class="stat">
+        <dt>SIZE</dt>
+        <dd class="stat__value stat__value--num" id="stat-size">—</dd>
+      </div>
+    </dl>
+  </aside>
+
+  <!-- 失败提示 -->
+  <div class="fallback" role="alert">
+    <h2 class="fallback__title">无法创建渲染上下文</h2>
+    <p class="fallback__text">当前浏览器或设备不支持 WebGL / WebGPU。</p>
+  </div>
+
+  <noscript>
+    <div class="fallback is-visible">
+      <h2 class="fallback__title">需要启用 JavaScript</h2>
+      <p class="fallback__text">此页面依赖脚本创建渲染上下文。</p>
+    </div>
+  </noscript>
+
+  <!--
+    脚本接入（页面本身不含任何渲染逻辑）
+    默认入口为 ability/1_basic_rendering_process.js，可按需替换为其它示例模块。
+
+    JS 侧只需要的状态钩子：
+      document.body.classList.add('is-ready')   // 隐藏初始化遮罩
+      document.body.classList.add('is-error')   // 显示失败提示
+      document.body.dataset.api = 'webgpu'      // 标识切换（缺省为 WebGL 配色）
+      #stat-api / #stat-fps / #stat-size        // 写入文本即可展示
+  -->
+  <script type="module" src="../ability/1_basic_rendering_process.js"></script>
+
+</body>
+</html>
