@@ -58,7 +58,7 @@
 
   <!--
     脚本接入（页面本身不含任何渲染逻辑）
-    默认入口为 ability/1_basic_rendering_process.js，可按需替换为其它示例模块。
+    默认入口为 ability/1_basic_rendering_process_webgl.js，可按需替换为其它示例模块。
 
     JS 侧只需要的状态钩子：
       document.body.classList.add('is-ready')   // 隐藏初始化遮罩
@@ -66,7 +66,7 @@
       document.body.dataset.api = 'webgpu'      // 标识切换（缺省为 WebGL 配色）
       #stat-api / #stat-fps / #stat-size        // 写入文本即可展示
   -->
-  <script type="module" src="../ability/1_basic_rendering_process.js"></script>
+  <script type="module" src="../ability/1_basic_rendering_process_webgpu.js"></script>
 
 </body>
 </html>
