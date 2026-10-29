@@ -249,6 +249,7 @@ async function main() {
   });
 
   // ③改 - 复用同一块 Float32Array 拼 uniform 数据（下标单位是 float32, 对应上面的偏移表）
+  //        注意: 这一步只是填 CPU 内存, 真正传到 GPU 是 render() 里的 ④
   const uniformData = new Float32Array(UNIFORM_BYTES / 4);
   const OFFSET = {
     mvp: 0,
@@ -317,7 +318,8 @@ async function main() {
 
   // ---------- 7. 单次绘制：画面静止，没有 requestAnimationFrame 循环 ----------
   function render() {
-    // 传 - 矩阵随画布尺寸变化, 所以每次重绘都重新计算并上传
+    // ④传 - 把 CPU 侧拼好的 uniform 拷进 GPU 缓冲区（相当于 WebGL 的 gl.uniform*）
+    //      矩阵随画布尺寸变化, 所以每次重绘都重新计算、重新上传
     uniformData.set(multiply(projection, multiply(view, model)), OFFSET.mvp);
     uniformData.set(model, OFFSET.model);
     uniformData.set(normalMatrix, OFFSET.normalMatrix);
